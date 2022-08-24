@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class PriceListTile extends StatelessWidget {
   final String title;
-  final String textRate;
+  final String brand;
   final String pack;
   final String mrp;
   final String prt;
@@ -11,7 +11,7 @@ class PriceListTile extends StatelessWidget {
   const PriceListTile(
       {Key? key,
       required this.title,
-      required this.textRate,
+      required this.brand,
       required this.pack,
       required this.mrp,
       required this.prt,
@@ -53,7 +53,7 @@ class PriceListTile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Text Rate:',
+                          'Brand:',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -64,7 +64,7 @@ class PriceListTile extends StatelessWidget {
                           width: 4,
                         ),
                         Text(
-                          textRate.toString(),
+                          brand.toString(),
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -140,7 +140,7 @@ class PriceListTile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'PRT:',
+                          'PTR:',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -174,7 +174,7 @@ class PriceListTile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'PRS:',
+                          'PTS:',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,

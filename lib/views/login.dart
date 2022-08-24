@@ -222,16 +222,16 @@ class _LogInPageState extends State<LogInPage> {
                                   ));
 
                                   //TODO: Delete when release
-                                  // Navigator.pushAndRemoveUntil(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => HomePage()),
-                                  //         (route) => false);
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage()),
+                                          (route) => false);
 
                                   //TODO: Comment out when release
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          LogInOtpPage(_Controller.text)));
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) =>
+                                  //         LogInOtpPage(_Controller.text)));
                                 } else {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(

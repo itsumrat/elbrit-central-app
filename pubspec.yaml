@@ -30,6 +30,9 @@ dependencies:
   extended_image: ^6.2.1
   video_player: ^2.4.5
   shared_preferences: ^2.0.15
+  video_thumbnail: ^0.5.2
+  better_player: ^0.0.83
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

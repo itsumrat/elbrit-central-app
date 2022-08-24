@@ -36,14 +36,18 @@ class _HomePageState extends State<HomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.blueAccent,
+        type: BottomNavigationBarType.fixed,
+        items: [
           BottomNavigationBarItem(
             icon: Image.asset(
               'images/Vector-7.png',
               scale: 1.3,
             ),
             label: 'Wall',
-            backgroundColor: Colors.white,
+// backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -51,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               scale: 1.3,
             ),
             label: 'Products',
-            backgroundColor: Colors.white,
+// backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -59,22 +63,53 @@ class _HomePageState extends State<HomePage> {
               scale: 1.3,
             ),
             label: 'Pricelist',
-            // backgroundColor: Colors.purple,
+// backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
               'images/Vector-10.png',
-              scale: 1.3,
             ),
             label: 'Notification',
-            // backgroundColor: Colors.pink,
+// backgroundColor: Colors.pink,
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xff18B7FF),
-        unselectedItemColor: const Color(0xff191919),
-        onTap: _onItemTapped,
       ),
+
     );
   }
 }
+//
+// items: <BottomNavigationBarItem>[
+// BottomNavigationBarItem(
+// icon: Image.asset(
+// 'images/Vector-7.png',
+// scale: 1.3,
+// ),
+// label: 'Wall',
+// // backgroundColor: Colors.white,
+// ),
+// BottomNavigationBarItem(
+// icon: Image.asset(
+// 'images/Vector-8.png',
+// scale: 1.3,
+// ),
+// label: 'Products',
+// // backgroundColor: Colors.black,
+// ),
+// BottomNavigationBarItem(
+// icon: Image.asset(
+// 'images/Vector-9.png',
+// scale: 1.3,
+// ),
+// label: 'Pricelist',
+// // backgroundColor: Colors.purple,
+// ),
+// BottomNavigationBarItem(
+// icon: Image.asset(
+// 'images/Vector-10.png',
+// ),
+// label: 'Notification',
+// // backgroundColor: Colors.pink,
+// ),
+// ],
+// onTap: _onItemTapped,

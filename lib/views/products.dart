@@ -27,6 +27,7 @@ class _ProductPageState extends State<ProductPage> {
     productModels = await Api().getProducts();
     print('productModels: ${productModels.length}');
     setState(() {});
+    return productModels;
   }
 
   @override
@@ -63,121 +64,134 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
         ),
-        body: productModels.length!=0?Container(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 10, bottom: 10),
-                  child: Container(
-                    height: 36,
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: const Color(0xffE9EEF3), width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xffE9EEF3),
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    child: TextFormField(
-                      controller: _search,
-                      onChanged: (value){
-                        setState(() {
+        body: FutureBuilder(
+          future: getProductFeatuers,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }else if(snapshot.hasData){
+              return Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 10, bottom: 10),
+                        child: Container(
+                          height: 36,
+                          decoration: BoxDecoration(
+                            border:
+                            Border.all(color: const Color(0xffE9EEF3), width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                            color: const Color(0xffE9EEF3),
+                          ),
+                          width: MediaQuery.of(context).size.width,
+                          child: TextFormField(
+                            controller: _search,
+                            onChanged: (value){
+                              setState(() {
 
-                        });
-                      },
-                      decoration: InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.search,
+                              });
+                            },
+                            decoration: InputDecoration(
+                                suffixIcon: Icon(
+                                  Icons.search,
+                                ),
+                                hintText: "Search Product",
+                                contentPadding: EdgeInsets.only(left: 10, right: 10,),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10,),
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.grey
+                                    )
+                                )
+                            ),
+                          ),
+                          // child: IconButton(
+                          //   icon: const Align(
+                          //       alignment: Alignment.topLeft,
+                          //       child: Icon(Icons.search)),
+                          //   onPressed: () {
+                          //     showSearch(
+                          //         context: context, delegate: CustomSearchDelegate());
+                          //   },
+                          // ),
                         ),
-                        hintText: "Search Product",
-                        contentPadding: EdgeInsets.only(left: 10, right: 10,),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10,),
-                          borderSide: BorderSide(
-                            width: 1, color: Colors.grey
-                          )
-                        )
                       ),
-                    ),
-                    // child: IconButton(
-                    //   icon: const Align(
-                    //       alignment: Alignment.topLeft,
-                    //       child: Icon(Icons.search)),
-                    //   onPressed: () {
-                    //     showSearch(
-                    //         context: context, delegate: CustomSearchDelegate());
-                    //   },
-                    // ),
+                      productModels.isNotEmpty?ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: productModels.length,
+                          itemBuilder: (context, index) {
+                            String name = productModels[index].productName!;
+                            print(productModels[index].cartonImage!);
+                            if(_search.text.isEmpty){
+                              return GestureDetector(
+                                child: ProductTile(
+                                  picture:
+                                  "http://admin.elbrit.org/uploads/carton/${productModels[index].cartonImage!}",
+                                  title: productModels[index].productName!,
+                                  brandPromo: productModels[index].others!,
+                                  medicineName: productModels[index].labelClaim!,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (
+                                          context,
+                                          ) =>
+                                          ProductDetails(
+                                            // id: productModels[index].id.toString(),
+                                            productModel: productModels[index],
+                                            // productModels: productModels[index],
+                                          ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }else if(name.toLowerCase().contains(_search.text.toLowerCase())){
+                              return GestureDetector(
+                                child: ProductTile(
+                                  picture:
+                                  "http://admin.elbrit.org/uploads/carton/${productModels[index].cartonImage!}",
+                                  title: productModels[index].productName!,
+                                  brandPromo: productModels[index].others!,
+                                  medicineName: productModels[index].labelClaim!,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (
+                                          context,
+                                          ) =>
+                                          ProductDetails(
+                                            // id: productModels[index].id.toString(),
+                                            productModel: productModels[index],
+                                            // productModels: productModels[index],
+                                          ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }else{
+                              return Container();
+                            }
+
+
+                          }):Center(child: const Text("There is no data to show")),
+                    ],
                   ),
                 ),
-                productModels.isNotEmpty?ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: productModels.length,
-                    itemBuilder: (context, index) {
-                      String name = productModels[index].productName!;
-                      print(productModels[index].cartonImage!);
-                      if(_search.text.isEmpty){
-                        return GestureDetector(
-                          child: ProductTile(
-                            picture:
-                            "http://admin.elbrit.org/uploads/carton/${productModels[index].cartonImage!}",
-                            title: productModels[index].productName!,
-                            brandPromo: productModels[index].others!,
-                            medicineName: productModels[index].labelClaim!,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (
-                                    context,
-                                    ) =>
-                                    ProductDetails(
-                                      // id: productModels[index].id.toString(),
-                                      productModel: productModels[index],
-                                      // productModels: productModels[index],
-                                    ),
-                              ),
-                            );
-                          },
-                        );
-                      }else if(name.toLowerCase().contains(_search.text.toLowerCase())){
-                        return GestureDetector(
-                          child: ProductTile(
-                            picture:
-                            "http://admin.elbrit.org/uploads/carton/${productModels[index].cartonImage!}",
-                            title: productModels[index].productName!,
-                            brandPromo: productModels[index].others!,
-                            medicineName: productModels[index].labelClaim!,
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (
-                                    context,
-                                    ) =>
-                                    ProductDetails(
-                                      // id: productModels[index].id.toString(),
-                                      productModel: productModels[index],
-                                      // productModels: productModels[index],
-                                    ),
-                              ),
-                            );
-                          },
-                        );
-                      }else{
-                         return Container();
-                      }
-
-
-                    }):Center(child: const Text("There is no data to show")),
-              ],
-            ),
-          ),
-        ):Center(child: CircularProgressIndicator()),
+              );
+            }else{
+              return Center(child: Text("No data found"));
+            }
+          },
+        )
       ),
     );
   }
